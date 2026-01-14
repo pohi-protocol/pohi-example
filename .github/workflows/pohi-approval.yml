@@ -1,0 +1,66 @@
+# PoHI Human Approval Workflow
+#
+# This workflow requires human approval via World ID before merging.
+# Add the 'ready-to-merge' label to a PR to trigger the approval flow.
+
+name: PoHI Human Approval
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  verify:
+    name: Require Human Approval
+    if: github.event.label.name == 'ready-to-merge'
+    uses: pohi-protocol/pohi/.github/workflows/pohi-approval.yml@main
+    with:
+      approval-url: https://pohi-demo.vercel.app
+      world-id-app-id: app_staging_5cdaf82b6bf48a0829c74584eb3aa23b
+      world-id-action: approve_commit
+      verification-level: orb
+      timeout-minutes: 30
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  post-approval:
+    name: Post Approval Actions
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Display Approval Info
+        run: |
+          echo "## Human Approval Verified" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Attestation Hash | \`${{ needs.verify.outputs.attestation-hash }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Nullifier Hash | \`${{ needs.verify.outputs.nullifier-hash }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Approved At | ${{ needs.verify.outputs.approved-at }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This PR has been approved by a verified human via World ID." >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ✅ Human Approval Verified
+
+            This PR has been approved by a verified human via World ID.
+
+            | Field | Value |
+            |-------|-------|
+            | Attestation Hash | \`${{ needs.verify.outputs.attestation-hash }}\` |
+            | Nullifier Hash | \`${{ needs.verify.outputs.nullifier-hash }}\` |
+            | Approved At | ${{ needs.verify.outputs.approved-at }} |
+
+            ---
+            Verified by [PoHI Protocol](https://github.com/pohi-protocol/pohi)`
+            })

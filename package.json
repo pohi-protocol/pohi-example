@@ -1,0 +1,26 @@
+{
+  "name": "pohi-example",
+  "version": "0.1.0",
+  "description": "Example repository demonstrating PoHI (Proof of Human Intent) workflow",
+  "main": "src/hello.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/hello.js"
+  },
+  "keywords": [
+    "pohi",
+    "proof-of-human-intent",
+    "world-id",
+    "human-verification",
+    "ai-safety"
+  ],
+  "author": "PoHI Protocol",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pohi-protocol/pohi-example.git"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
