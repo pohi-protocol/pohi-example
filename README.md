@@ -1,30 +1,30 @@
 # PoHI Example Repository
 
-**Proof of Human Intent** のデモ用リポジトリです。
+A demo repository for **Proof of Human Intent**.
 
-このリポジトリをforkして、PoHIによる人間承認フローを体験できます。
+Fork this repository to experience the PoHI human approval flow.
 
-## PoHIとは？
+## What is PoHI?
 
-AIがコードを書く時代、「誰が承認したか」を暗号学的に証明するプロトコルです。
+In an era where AI writes code, PoHI is a protocol that cryptographically proves "who approved it."
 
-- **Who?** - World ID による人間証明
-- **What?** - 特定のcommit/PRへの承認
-- **When?** - 改ざん不可能なタイムスタンプ
+- **Who?** - Human verification via World ID
+- **What?** - Approval for a specific commit/PR
+- **When?** - Tamper-proof timestamp
 
-詳細: [pohi-protocol/pohi](https://github.com/pohi-protocol/pohi)
+Details: [pohi-protocol/pohi](https://github.com/pohi-protocol/pohi)
 
-## 試し方
+## How to Try
 
-### 1. このリポジトリをFork
+### 1. Fork This Repository
 
-右上の「Fork」ボタンをクリック
+Click the "Fork" button in the top right corner
 
-### 2. GitHub Actionsを有効化
+### 2. Enable GitHub Actions
 
-Fork後、「Actions」タブで workflows を有効化
+After forking, enable workflows in the "Actions" tab
 
-### 3. PRを作成
+### 3. Create a PR
 
 ```bash
 git checkout -b test-pohi
@@ -34,33 +34,33 @@ git commit -m "Test PoHI approval"
 git push origin test-pohi
 ```
 
-GitHub上でPRを作成
+Create a PR on GitHub
 
-### 4. ラベルを付ける
+### 4. Add a Label
 
-PRに `ready-to-merge` ラベルを追加
+Add the `ready-to-merge` label to the PR
 
-### 5. World Appで承認
+### 5. Approve with World App
 
-1. ワークフローが起動し、承認URLが表示される
-2. [pohi-demo.vercel.app](https://pohi-demo.vercel.app/) でWorld ID QRコードをスキャン
-3. World Appで承認
+1. The workflow starts and displays an approval URL
+2. Scan the World ID QR code at [pohi-demo.vercel.app](https://pohi-demo.vercel.app/)
+3. Approve with World App
 
-### 6. 承認完了
+### 6. Approval Complete
 
-PRに承認結果がコメントされます:
+The approval result will be commented on the PR:
 - Attestation Hash
 - Nullifier Hash
 - Approved At
 
-## 必要なもの
+## Requirements
 
 - [World App](https://world.org/world-app) (iOS/Android)
-- GitHubアカウント
+- GitHub account
 
-## ワークフロー設定
+## Workflow Configuration
 
-このリポジトリでは以下のワークフローが設定されています:
+This repository has the following workflow configured:
 
 ```yaml
 # .github/workflows/pohi-approval.yml
@@ -80,17 +80,17 @@ jobs:
       world-id-action: approve_commit
 ```
 
-## 自分のリポジトリに導入する
+## Add to Your Own Repository
 
-1. `.github/workflows/pohi-approval.yml` をコピー
-2. 必要に応じて設定をカスタマイズ
-3. [World ID Developer Portal](https://developer.worldcoin.org/) でApp IDを取得
+1. Copy `.github/workflows/pohi-approval.yml`
+2. Customize the configuration as needed
+3. Get an App ID from [World ID Developer Portal](https://developer.worldcoin.org/)
 
-## 関連リンク
+## Related Links
 
-- [PoHI Protocol](https://github.com/pohi-protocol/pohi) - メインリポジトリ
-- [PoHI Demo](https://pohi-demo.vercel.app/) - ライブデモ
-- [World ID Docs](https://docs.world.org/world-id) - World ID ドキュメント
+- [PoHI Protocol](https://github.com/pohi-protocol/pohi) - Main repository
+- [PoHI Demo](https://pohi-demo.vercel.app/) - Live demo
+- [World ID Docs](https://docs.world.org/world-id) - World ID documentation
 
 ## License
 
